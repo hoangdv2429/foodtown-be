@@ -30,7 +30,7 @@ export class FoodsController {
   findOne(@Param('id') id: number) {
     console.log(typeof id);
 
-    return this.foodsService.findOne('' + id);
+    return this.foodsService.findOne(id);
   }
 
   //Create A food
@@ -48,7 +48,7 @@ export class FoodsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.foodsService.remove(id);
   }
 }
