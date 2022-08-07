@@ -26,6 +26,8 @@ export class Food {
 
   //   @Column('json', { nullable: true })
   @JoinTable()
-  @ManyToMany((type) => Components, (component) => component.foods)
-  components: string[];
+  @ManyToMany((type) => Components, (component) => component.foods, {
+    cascade: true,
+  })
+  components: Components[];
 }
