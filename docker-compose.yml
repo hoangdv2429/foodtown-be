@@ -1,10 +1,10 @@
-version: '3'
+version: '3.5'
 
 services:
-  db:
-    image: postgres
+  mongodb:
+    image: mongo
     restart: always
     ports:
-      - "5432:5432"
+      - 27017:27017
     environment:
-      POSTGRES_PASSWORD: pass123
+      MONGODB_DATABASE: foodtown-mongo
