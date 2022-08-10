@@ -1,52 +1,59 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { Connection, Model } from 'mongoose';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { CreateFoodDto } from './dto/create-food.dto';
+import { UpdateFoodDto } from './dto/update-food.dto';
 import { Food } from './entities/food.entity';
 
 @Injectable()
 export class FoodsService {
-  private foods: Food[] = [
-    {
-      id: 1,
-      name: 'shrimp',
-      description: 'Help',
-      category: 'dry food',
-      price: 99,
-      components: ['bing', 'chilling'],
-    },
-  ];
+  constructor(
+    @InjectModel(Food.name) private readonly foodModel: Model<Food>,
+    @InjectConnection() private readonly connection: Connection,
+    @InjectModel(Event.name) private readonly eventModel: Model<Event>,
+  ) {}
 
-  findAll() {
-    return this.foods;
+  findAll(paginationQuery: PaginationQueryDto) {
+    const { limit, offset } = paginationQuery;
+    return this.foodModel.find().skip(offset).limit(limit).exec();
   }
 
-  findOne(id: string) {
-    const food = this.foods.find((item) => item.id === +id);
+  async findOne(id: string) {
+    const food = await this.foodModel.findOne({ _id: id }).exec();
     if (!food) {
-      throw new NotFoundException(`not found`);
+      throw new NotFoundException(`#${id} not found`);
     }
     return food;
   }
 
-  create(createFoodDto: any) {
-    this.foods.push(createFoodDto);
-    return createFoodDto;
+  create(createFoodDto: CreateFoodDto) {
+    const food = new this.foodModel(createFoodDto);
+    return food.save();
   }
 
-  update(id: string, updateFoodDto: any) {
-    const existingFood = this.findOne(id);
-    if (existingFood) {
-      //logic
+  async update(id: string, updateFoodDto: UpdateFoodDto) {
+    const existingFood = this.foodModel
+      .findOneAndUpdate({ _id: id }, { $set: updateFoodDto }, { new: true })
+      .exec();
+
+    if (!existingFood) {
+      throw new NotFoundException(`#${id} not found`);
     }
+    return existingFood;
   }
 
-  remove(id: string) {
-    const foodIndex = this.foods.findIndex((item) => item.id === +id);
-    if (foodIndex >= 0) {
-      this.foods.splice(foodIndex, 1);
-    }
+  async remove(id: string) {
+    const food = await this.findOne(id);
+    return food.remove();
+  }
+
+  async recommendFood(food: Food) {
+    const session = await this.connection.startSession();
+    session.startTransaction();
+
+    try {
+      food.recommendations++;
+    } catch (error) {}
   }
 }

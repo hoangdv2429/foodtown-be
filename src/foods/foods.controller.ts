@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -13,21 +11,21 @@ import {
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
 import { FoodsService } from './foods.service';
-
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 @Controller('foods')
 export class FoodsController {
   constructor(private readonly foodsService: FoodsService) {}
 
   //Get All food
   @Get()
-  findAll(@Query() paginationQuery) {
-    // const { limit, offset } = paginationQuery;
-    return this.foodsService.findAll();
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
+    const { limit, offset } = paginationQuery;
+    return this.foodsService.findAll(paginationQuery);
   }
 
   //Get specefic food
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     console.log(typeof id);
 
     return this.foodsService.findOne('' + id);
@@ -43,7 +41,6 @@ export class FoodsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFoodDto: UpdateFoodDto) {
-    // return `This action updates #${id} and #${name}`;
     return this.foodsService.update(id, updateFoodDto);
   }
 
