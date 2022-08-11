@@ -26,7 +26,7 @@ export class FoodsController {
   //Get specefic food
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log(typeof id);
+    // console.log(typeof id);
 
     return this.foodsService.findOne('' + id);
   }

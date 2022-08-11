@@ -19,6 +19,12 @@ import { FoodsService } from './foods.service';
     ]),
   ],
   controllers: [FoodsController],
-  providers: [FoodsService],
+  providers: [
+    {
+      provide: FoodsService,
+      useClass: FoodsService,
+    },
+  ],
+  exports: [FoodsService],
 })
 export class FoodsModule {}
