@@ -4,14 +4,9 @@ import * as mongoose from 'mongoose';
 export class Event extends mongoose.Document {
   @Prop()
   type: string;
-
   @Prop({ index: true })
   name: string;
-
-  @Prop({ default: 0 })
-  recommendations: number;
-
-  @Prop(mongoose.SchemaTypes.Mixed)
+  @Prop({ type: mongoose.SchemaTypes.Mixed })
   payload: Record<string, any>;
 }
 
