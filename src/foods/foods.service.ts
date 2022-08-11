@@ -54,6 +54,20 @@ export class FoodsService {
 
     try {
       food.recommendations++;
-    } catch (error) {}
+
+      const recommendEvent = new this.eventModel({
+        name: 'recommend_food',
+        type: 'food',
+        payload: { foodId: food.id },
+      });
+      await recommendEvent.save({ session });
+      await food.save({ session });
+
+      await session.commitTransaction();
+    } catch (err) {
+      await session.abortTransaction();
+    } finally {
+      session.endSession();
+    }
   }
 }

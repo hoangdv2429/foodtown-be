@@ -17,6 +17,9 @@ export class Food extends Document {
 
   @Prop([String])
   components: string[];
+
+  @Prop({ default: 0 })
+  recommendations: number;
 }
 
 export const FoodsSchema = SchemaFactory.createForClass(Food);
