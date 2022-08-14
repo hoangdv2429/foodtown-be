@@ -34,7 +34,7 @@ export class FoodsController {
   //Create A food
   @Post()
   create(@Body() createFoodDto: CreateFoodDto) {
-    console.log(createFoodDto instanceof CreateFoodDto);
+    // console.log(createFoodDto instanceof CreateFoodDto);
 
     return this.foodsService.create(createFoodDto);
   }
