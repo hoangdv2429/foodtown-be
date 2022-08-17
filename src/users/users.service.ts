@@ -71,10 +71,10 @@ class UsersService {
       }
       const posts = user.posts;
 
-      await this.postsService.deleteMany(
-        posts.map((post) => post._id.toString()),
-        session,
-      );
+      // await this.postsService.deleteMany(
+      //   posts.map((post) => post._id.toString()),
+      //   session,
+      // );
       await session.commitTransaction();
     } catch (error) {
       await session.abortTransaction();

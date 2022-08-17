@@ -7,10 +7,16 @@ import PostDto from './dto/post.dto';
 import { User } from '../users/user.schema';
 import * as mongoose from 'mongoose';
 import UpdatePostDto from './dto/updatePost.dto';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 
 @Injectable()
 class PostsService {
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
+  constructor(
+    @InjectModel(Post.name) private postModel: Model<PostDocument>,
+    @InjectConnection() private connection: Connection,
+  ) {}
+  // constructor(@InjectConnection() private connection: Connection) {}
 
   async findAll(
     documentsToSkip = 0,
@@ -67,8 +73,9 @@ class PostsService {
       ...postData,
       author,
     });
+    console.log(createdPost);
     // await createdPost.populate(['categories', 'series']); if add categories and series then un comment this to use
-    return createdPost.save();
+    return await createdPost.save();
   }
 
   async update(id: string, postData: UpdatePostDto) {
@@ -84,10 +91,11 @@ class PostsService {
   }
 
   async delete(postId: string) {
-    const result = await this.postModel.findByIdAndDelete(postId);
+    const result = await this.postModel.findOne({ _id: postId });
     if (!result) {
       throw new NotFoundException();
     }
+    return result.remove();
   }
 
   async deleteMany(
