@@ -38,16 +38,11 @@ export default class PostsController {
   async getPost(@Param() { id }: ParamsWithId) {
     return this.postsService.findOne(id);
   }
-  // @Get(':id')
-  // async getPost(@Param() id: ObjectId) {
-  //   return this.postsService.findOne(id);
-  // }
 
   @Post()
   @UseGuards(JwtAuthenticationGuard)
   async createPost(@Body() post: PostDto, @Req() req: RequestWithUser) {
-    // console.log("post Id: ", post.);
-    return this.postsService.create(post, req.user);
+    return await this.postsService.create(post, req.user);
   }
 
   @Delete(':id')

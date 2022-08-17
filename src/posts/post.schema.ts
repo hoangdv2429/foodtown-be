@@ -9,8 +9,8 @@ export type PostDocument = Post & mongoose.Document;
 
 @Schema()
 export class Post {
-  @Transform(({ value }) => value.toString(), { toPlainOnly: true })
-  _id: mongoose.ObjectId;
+  @Transform((value) => value.toString())
+  _id: mongoose.Schema.Types.ObjectId;
 
   @Prop()
   title: string;
