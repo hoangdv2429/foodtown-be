@@ -95,7 +95,7 @@ class PostsService {
     if (!result) {
       throw new NotFoundException();
     }
-    return result.remove();
+    return await result.remove();
   }
 
   async deleteMany(
