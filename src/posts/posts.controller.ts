@@ -22,7 +22,7 @@ import { PaginationParams } from '../utils/paginationParams';
 import UpdatePostDto from './dto/updatePost.dto';
 
 @Controller('posts')
-@UseInterceptors(MongooseClassSerializerInterceptor(PostModel))
+// @UseInterceptors(MongooseClassSerializerInterceptor(PostModel))
 export default class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
