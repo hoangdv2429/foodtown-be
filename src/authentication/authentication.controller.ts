@@ -16,10 +16,19 @@ import JwtAuthenticationGuard from './jwt-authentication.guard';
 import { User } from '../users/user.schema';
 import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 
+import { Param } from '@nestjs/common';
+
 @Controller('authentication')
 @UseInterceptors(MongooseClassSerializerInterceptor(User))
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
+
+  //need refactor after adding role to user
+  @Get('all')
+  findAll() {
+    const users = this.authenticationService.getAllUser();
+    return users;
+  }
 
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
@@ -50,5 +59,12 @@ export class AuthenticationController {
   @Get()
   authenticate(@Req() request: RequestWithUser) {
     return request.user;
+  }
+
+  //need refactor after adding role to user
+  @Get(':email')
+  findOneByEmail(@Param('email') email: string) {
+    const user = this.authenticationService.getUserByEmail(email);
+    return user;
   }
 }

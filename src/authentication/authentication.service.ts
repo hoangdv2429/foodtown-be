@@ -78,4 +78,18 @@ export class AuthenticationService {
       );
     }
   }
+
+  //need refactor after adding role to user
+
+  async getUserByEmail(email: string) {
+    const user = await this.usersService.getByEmail(email);
+    return user;
+  }
+
+  async getAllUser() {
+    console.log('running ?');
+
+    const users = await this.usersService.getAll();
+    return users;
+  }
 }
