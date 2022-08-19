@@ -15,6 +15,15 @@ class UsersService {
     @InjectConnection() private readonly connection: mongoose.Connection,
   ) {}
 
+  async getAll() {
+    const users = await this.userModel.find();
+    if (!users) {
+      console.log("can't get any");
+      throw new NotFoundException();
+    }
+    return users;
+  }
+
   async getByEmail(email: string) {
     const user = await this.userModel.findOne({ email }).populate({
       path: 'posts',
