@@ -1,4 +1,11 @@
-import { IsEmail, IsString, IsNotEmpty, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  IsNotEmpty,
+  MinLength,
+  Length,
+  Matches,
+} from 'class-validator';
 
 export class RegisterDto {
   @IsEmail()
@@ -16,6 +23,14 @@ export class RegisterDto {
   @IsNotEmpty()
   @MinLength(7)
   password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Length(10)
+  @Matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, {
+    message: 'Invalid phone number format',
+  })
+  phoneNumber: string;
 }
 
 export default RegisterDto;
