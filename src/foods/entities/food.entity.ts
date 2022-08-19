@@ -20,6 +20,9 @@ export class Food extends Document {
 
   @Prop({ default: 0 })
   recommendations: number;
+
+  @Prop({ default: 5 })
+  rating: number;
 }
 
 export const FoodsSchema = SchemaFactory.createForClass(Food);

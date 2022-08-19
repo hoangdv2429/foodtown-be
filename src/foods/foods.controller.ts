@@ -26,8 +26,6 @@ export class FoodsController {
   //Get specefic food
   @Get(':id')
   findOne(@Param('id') id: string) {
-    // console.log(typeof id);
-
     return this.foodsService.findOne('' + id);
   }
 
@@ -35,7 +33,6 @@ export class FoodsController {
   @Post()
   create(@Body() createFoodDto: CreateFoodDto) {
     // console.log(createFoodDto instanceof CreateFoodDto);
-
     return this.foodsService.create(createFoodDto);
   }
 
