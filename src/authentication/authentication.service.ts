@@ -87,8 +87,6 @@ export class AuthenticationService {
   }
 
   async getAllUser() {
-    console.log('running ?');
-
     const users = await this.usersService.getAll();
     return users;
   }
