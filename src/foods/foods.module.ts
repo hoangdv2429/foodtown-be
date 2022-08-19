@@ -5,6 +5,10 @@ import { Food, FoodsSchema } from './entities/food.entity';
 import { FoodsController } from './foods.controller';
 import { FoodsService } from './foods.service';
 
+class ConfigService {} //mockup config
+class DevelopmentConfigService {}
+class ProductionConfigService {}
+
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -23,6 +27,13 @@ import { FoodsService } from './foods.service';
     {
       provide: FoodsService,
       useClass: FoodsService,
+    },
+    {
+      provide: ConfigService,
+      useClass:
+        process.env.NODE_ENV === 'development'
+          ? DevelopmentConfigService
+          : ProductionConfigService,
     },
   ],
   exports: [FoodsService],
