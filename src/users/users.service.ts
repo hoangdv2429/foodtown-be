@@ -62,6 +62,7 @@ class UsersService {
         path: 'categories',
       },
     });
+    console.log(userData);
     return createdUser.save();
   }
 

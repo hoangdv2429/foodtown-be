@@ -32,6 +32,7 @@ export class AuthenticationController {
 
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
+    // console.log('save  this one =>>>>>', registrationData);
     return this.authenticationService.register(registrationData);
   }
 

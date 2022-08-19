@@ -50,6 +50,9 @@ export class User {
 
   @Type(() => Post)
   posts: Post[];
+
+  @Prop()
+  phoneNumber: string;
 }
 
 const UserSchema = SchemaFactory.createForClass(User);
