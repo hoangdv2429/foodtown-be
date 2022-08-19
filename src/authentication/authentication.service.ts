@@ -6,7 +6,6 @@ import { ConfigService } from '@nestjs/config';
 import TokenPayload from './tokenPayload.interface';
 import MongoError from '../utils/mongoError.enum';
 import UsersService from '../users/users.service';
-import { Error } from 'mongoose';
 
 @Injectable()
 export class AuthenticationService {
@@ -24,7 +23,7 @@ export class AuthenticationService {
         password: hashedPassword,
       });
     } catch (error: any) {
-      if (error instanceof Error) {
+      if (error?.code === MongoError.DuplicateKey) {
         //&& error?.code === MongoError.DuplicateKey
         throw new HttpException(
           'User with that email already exists',
