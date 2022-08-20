@@ -11,19 +11,23 @@ import {
 import { AuthenticationService } from './authentication.service';
 import RegisterDto from './dto/register.dto';
 import RequestWithUser from './requestWithUser.interface';
-import { LocalAuthenticationGuard } from './localAuthentication.guard';
-import JwtAuthenticationGuard from './jwt-authentication.guard';
+import { LocalAuthenticationGuard } from './guards/localAuthentication.guard';
+import JwtAuthenticationGuard from './guards/jwt-authentication.guard';
 import { User } from '../users/user.schema';
 import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 
 import { Param } from '@nestjs/common';
+import { Roles } from './decorators/role.decorator';
+import { Role } from './enums/role.enum';
+import { RolesGuard } from './guards/roles.guard';
 
 @Controller('authentication')
-@UseInterceptors(MongooseClassSerializerInterceptor(User))
+// @UseInterceptors(MongooseClassSerializerInterceptor(User)) temperaly disable this one
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
-  //need refactor after adding role to user
+  @UseGuards(JwtAuthenticationGuard, RolesGuard)
+  @Roles(Role.Admin)
   @Get('all')
   findAll() {
     const users = this.authenticationService.getAllUser();
@@ -53,16 +57,19 @@ export class AuthenticationController {
     request.res?.setHeader(
       'Set-Cookie',
       this.authenticationService.getCookieForLogOut(),
+      // `Authentication=; HttpOnly; Path=/; Max-Age=0`,
     );
   }
 
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtAuthenticationGuard, RolesGuard)
+  @Roles(Role.User)
   @Get()
   authenticate(@Req() request: RequestWithUser) {
     return request.user;
   }
 
-  //need refactor after adding role to user
+  @UseGuards(JwtAuthenticationGuard, RolesGuard)
+  @Roles(Role.Admin)
   @Get(':email')
   findOneByEmail(@Param('email') email: string) {
     const user = this.authenticationService.getUserByEmail(email);

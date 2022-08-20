@@ -19,6 +19,7 @@ export class FoodsController {
   //Get All food
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { limit, offset } = paginationQuery;
     return this.foodsService.findAll(paginationQuery);
   }
@@ -32,7 +33,6 @@ export class FoodsController {
   //Create A food
   @Post()
   create(@Body() createFoodDto: CreateFoodDto) {
-    // console.log(createFoodDto instanceof CreateFoodDto);
     return this.foodsService.create(createFoodDto);
   }
 

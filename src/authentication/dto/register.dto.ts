@@ -6,6 +6,7 @@ import {
   Matches,
   MaxLength,
 } from 'class-validator';
+import { Role } from '../enums/role.enum';
 
 export class RegisterDto {
   @IsEmail()
@@ -32,6 +33,10 @@ export class RegisterDto {
     message: 'Invalid phone number format',
   })
   phoneNumber: string;
+
+  @IsString()
+  @IsNotEmpty()
+  roles: Role[];
 }
 
 export default RegisterDto;

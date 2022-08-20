@@ -14,7 +14,7 @@ import {
 import PostsService from './posts.service';
 import ParamsWithId from '../utils/paramsWithId';
 import PostDto from './dto/post.dto';
-import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
+import JwtAuthenticationGuard from '../authentication/guards/jwt-authentication.guard';
 import RequestWithUser from '../authentication/requestWithUser.interface';
 import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 import { Post as PostModel } from './post.schema';
