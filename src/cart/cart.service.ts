@@ -1,12 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { GoneException, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cart, CartDocument } from './schemas/cart.schema';
 import { ItemDTO } from './dto/item.dto';
+import { FoodsService } from 'src/foods/foods.service';
 @Injectable()
 export class CartService {
   constructor(
     @InjectModel('Cart') private readonly cartModel: Model<CartDocument>,
+    private readonly foodsService: FoodsService,
   ) {}
 
   async createCart(
@@ -56,9 +58,15 @@ export class CartService {
 
   async addItemToCart(userId: string, itemDTO: ItemDTO): Promise<Cart> {
     const { productId, quantity } = itemDTO;
-    const subTotalPrice = quantity * itemDTO.food.price;
+    console.log(itemDTO);
+    const food = await this.foodsService.findOne(productId);
+    if (!food) {
+      throw new GoneException('food not found');
+    }
+    itemDTO.food = food;
 
     const cart = await this.getCart(userId);
+    const subTotalPrice = quantity * itemDTO.food.price;
 
     if (cart) {
       const itemIndex = cart.items.findIndex(
