@@ -24,7 +24,6 @@ export class AuthenticationService {
       });
     } catch (error: any) {
       if (error?.code === MongoError.DuplicateKey) {
-        //&& error?.code === MongoError.DuplicateKey
         throw new HttpException(
           'User with that email already exists',
           HttpStatus.BAD_REQUEST,

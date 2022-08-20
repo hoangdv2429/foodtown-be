@@ -13,7 +13,7 @@ import {
 import CategoriesService from './categories.service';
 import ParamsWithId from '../utils/paramsWithId';
 import CategoryDto from './dto/category.dto';
-import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
+import JwtAuthenticationGuard from '../authentication/guards/jwt-authentication.guard';
 import RequestWithUser from '../authentication/requestWithUser.interface';
 import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 import { Category } from './category.schema';

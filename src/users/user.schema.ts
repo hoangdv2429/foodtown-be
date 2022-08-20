@@ -3,7 +3,7 @@ import { Document, ObjectId } from 'mongoose';
 import { Exclude, Transform, Type } from 'class-transformer';
 import { Address, AddressSchema } from './address.schema';
 import { Post } from '../posts/post.schema';
-
+import { Role } from 'src/authentication/enums/role.enum';
 export type UserDocument = User & Document;
 
 @Schema({
@@ -51,8 +51,11 @@ export class User {
   @Type(() => Post)
   posts: Post[];
 
-  @Prop()
+  @Prop({ unique: true })
   phoneNumber: string;
+
+  @Prop({ default: Role.User })
+  roles: Role[];
 }
 
 const UserSchema = SchemaFactory.createForClass(User);

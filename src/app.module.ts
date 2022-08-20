@@ -7,6 +7,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import CategoriesModule from './categories/categories.module';
 import SeriesModule from './series/series.module';
 import { FoodsModule } from './foods/foods.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { FoodsModule } from './foods/foods.module';
     CategoriesModule,
     SeriesModule,
     FoodsModule,
+    CartModule,
   ],
   controllers: [],
   providers: [],
