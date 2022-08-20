@@ -8,6 +8,7 @@ import CategoriesModule from './categories/categories.module';
 import SeriesModule from './series/series.module';
 import { FoodsModule } from './foods/foods.module';
 import { CartModule } from './cart/cart.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { CartModule } from './cart/cart.module';
     SeriesModule,
     FoodsModule,
     CartModule,
+    PaymentsModule,
   ],
   controllers: [],
   providers: [],
