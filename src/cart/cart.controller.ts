@@ -47,10 +47,13 @@ export class CartController {
   @Delete('/')
   async removeItemFromCart(
     @Request() req: RequestWithUser,
-    @Body() productId: string,
+    @Body() productId: ItemDTO,
   ) {
     const userId = req.user.id;
-    const cart = await this.cartService.removeItemFromCart(userId, productId);
+    const cart = await this.cartService.removeItemFromCart(
+      userId,
+      productId.productId,
+    );
     if (!cart) throw new NotFoundException('Item does not exist');
     return cart;
   }

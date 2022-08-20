@@ -70,4 +70,10 @@ export class FoodsService {
       session.endSession();
     }
   }
+
+  async findWithout(without: string) {
+    const foods = await this.foodModel.find();
+
+    return foods.filter((food) => food.id != without);
+  }
 }

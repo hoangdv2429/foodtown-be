@@ -30,6 +30,11 @@ export class FoodsController {
     return this.foodsService.findOne('' + id);
   }
 
+  @Get('/findwithout/:id')
+  findWithoutId(@Param('id') id: string): Promise<any> {
+    return this.foodsService.findWithout(id);
+  }
+
   //Create A food
   @Post()
   create(@Body() createFoodDto: CreateFoodDto) {

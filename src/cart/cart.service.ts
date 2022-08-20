@@ -58,7 +58,7 @@ export class CartService {
 
   async addItemToCart(userId: string, itemDTO: ItemDTO): Promise<Cart> {
     const { productId, quantity } = itemDTO;
-    console.log(itemDTO);
+    // console.log(itemDTO);
     const food = await this.foodsService.findOne(productId);
     if (!food) {
       throw new GoneException('food not found');
@@ -66,6 +66,8 @@ export class CartService {
     itemDTO.food = food;
 
     const cart = await this.getCart(userId);
+    console.log(cart);
+
     const subTotalPrice = quantity * itemDTO.food.price;
 
     if (cart) {
@@ -97,16 +99,22 @@ export class CartService {
     }
   }
 
-  async removeItemFromCart(userId: string, productId: string): Promise<any> {
+  async removeItemFromCart(userId: string, ProductId: string): Promise<any> {
     const cart = await this.getCart(userId);
 
-    const itemIndex = cart.items.findIndex(
-      (item) => item.productId == productId,
-    );
+    if (cart) {
+      const itemIndex = cart.items.findIndex(
+        (item) => item.productId == ProductId,
+      );
 
-    if (itemIndex > -1) {
-      cart.items.splice(itemIndex, 1);
-      return cart.save();
+      console.log(itemIndex);
+
+      if (itemIndex > -1) {
+        cart.items.splice(itemIndex, 1);
+        return cart.save();
+      }
+    } else {
+      throw new GoneException('not found the cart for this user');
     }
   }
 }
