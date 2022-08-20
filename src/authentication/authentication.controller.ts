@@ -6,15 +6,12 @@ import {
   Post,
   UseGuards,
   Get,
-  UseInterceptors,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import RegisterDto from './dto/register.dto';
 import RequestWithUser from './requestWithUser.interface';
 import { LocalAuthenticationGuard } from './localAuthentication.guard';
 import JwtAuthenticationGuard from './guards/jwt-authentication.guard';
-import { User } from '../users/user.schema';
-import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 
 import { Param } from '@nestjs/common';
 import { Roles } from './decorators/role.decorator';
