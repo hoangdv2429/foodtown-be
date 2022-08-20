@@ -11,7 +11,7 @@ import {
 import { AuthenticationService } from './authentication.service';
 import RegisterDto from './dto/register.dto';
 import RequestWithUser from './requestWithUser.interface';
-import { LocalAuthenticationGuard } from './guards/localAuthentication.guard';
+import { LocalAuthenticationGuard } from './localAuthentication.guard';
 import JwtAuthenticationGuard from './guards/jwt-authentication.guard';
 import { User } from '../users/user.schema';
 import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';

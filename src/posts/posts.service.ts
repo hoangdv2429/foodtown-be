@@ -16,7 +16,6 @@ class PostsService {
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectConnection() private connection: Connection,
   ) {}
-  // constructor(@InjectConnection() private connection: Connection) {}
 
   async findAll(
     documentsToSkip = 0,

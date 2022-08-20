@@ -6,7 +6,10 @@ export type ItemDocument = Item & Document;
 
 @Schema()
 export class Item {
-  @Prop({ type: SchemaTypes.ObjectId, ref: 'food' })
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Food' })
+  food: Food;
+
+  @Prop()
   productId: string;
 
   @Prop()
@@ -14,9 +17,6 @@ export class Item {
 
   @Prop()
   quantity: number;
-
-  @Prop()
-  food: Food;
 
   @Prop()
   subTotalPrice: number;
