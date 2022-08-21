@@ -44,7 +44,8 @@ export class AuthenticationController {
     const { user } = request;
     const cookie = this.authenticationService.getCookieWithJwtToken(user._id);
     request.res?.setHeader('Set-Cookie', cookie);
-    return user;
+    // return user;
+    return cookie;
   }
 
   @UseGuards(JwtAuthenticationGuard)
@@ -54,7 +55,6 @@ export class AuthenticationController {
     request.res?.setHeader(
       'Set-Cookie',
       this.authenticationService.getCookieForLogOut(),
-      // `Authentication=; HttpOnly; Path=/; Max-Age=0`,
     );
   }
 
