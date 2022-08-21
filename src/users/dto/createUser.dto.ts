@@ -5,7 +5,7 @@ export class CreateUserDto {
   firstName: string;
   password: string;
   phoneNumber: string;
-  roles: Role[];
+  // roles: Role[]; not allow user to assign role when signing up
 }
 
 export default CreateUserDto;
