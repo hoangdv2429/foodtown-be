@@ -58,7 +58,6 @@ export class CartService {
 
   async addItemToCart(userId: string, itemDTO: ItemDTO): Promise<Cart> {
     const { productId, quantity } = itemDTO;
-    // console.log(itemDTO);
     const food = await this.foodsService.findOne(productId);
     if (!food) {
       throw new GoneException('food not found');
@@ -66,7 +65,7 @@ export class CartService {
     itemDTO.food = food;
 
     const cart = await this.getCart(userId);
-    console.log(cart);
+    // console.log(cart);
 
     const subTotalPrice = quantity * itemDTO.food.price;
 
@@ -106,8 +105,6 @@ export class CartService {
       const itemIndex = cart.items.findIndex(
         (item) => item.productId == ProductId,
       );
-
-      console.log(itemIndex);
 
       if (itemIndex > -1) {
         cart.items.splice(itemIndex, 1);

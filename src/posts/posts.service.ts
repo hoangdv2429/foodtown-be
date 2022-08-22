@@ -56,8 +56,6 @@ class PostsService {
   }
 
   async findOne(id: string) {
-    console.log(id);
-
     const post = await this.postModel.findOne({ _id: id }).populate('author');
     // .populate('categories')
     // .populate('series');
@@ -72,7 +70,6 @@ class PostsService {
       ...postData,
       author,
     });
-    console.log(createdPost);
     // await createdPost.populate(['categories', 'series']); if add categories and series then un comment this to use
     return await createdPost.save();
   }

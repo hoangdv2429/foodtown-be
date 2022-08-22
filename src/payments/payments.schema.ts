@@ -1,16 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, ObjectId } from 'mongoose';
+import { Document, ObjectId, SchemaTypes } from 'mongoose';
 import { Transform } from 'class-transformer';
+import { Cart } from 'src/cart/schemas/cart.schema';
+import { Status } from './enums/status.enum';
 
-export type CategoryDocument = Order & Document;
+export type PaymentDocument = Payment & Document;
 
 @Schema()
-export class Order {
+export class Payment {
   @Transform(({ value }) => value.toString())
   _id: ObjectId;
 
-  @Prop()
-  name: string;
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Cart' })
+  cart: Cart;
+
+  @Prop({ default: Status.Pending })
+  status: Status;
 }
 
-export const CategorySchema = SchemaFactory.createForClass(Order);
+export const PaymentSchema = SchemaFactory.createForClass(Payment);
