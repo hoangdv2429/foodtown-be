@@ -16,15 +16,11 @@ import ParamsWithId from 'src/utils/paramsWithId';
 import { PaymentDTO } from './dto/payment.dto';
 import { PaymentsService } from './payments.service';
 import { RolesGuard } from 'src/authentication/guards/roles.guard';
-import UsersService from 'src/users/users.service';
 import AddressDTO from 'src/users/dto/address.dto';
 
 @Controller('payments')
 export class PaymentsController {
-  constructor(
-    private readonly paymentService: PaymentsService,
-    private readonly userService: UsersService,
-  ) {}
+  constructor(private readonly paymentService: PaymentsService) {}
 
   @Get()
   @UseGuards(JwtAuthenticationGuard, RolesGuard)
@@ -34,12 +30,12 @@ export class PaymentsController {
   }
 
   //to be delete API
-  @Get(':id')
-  @UseGuards(JwtAuthenticationGuard)
-  // @Roles(Role.Admin)
-  async getByUserId(@Param() { id }: ParamsWithId) {
-    return await this.paymentService.findOne(id);
-  }
+  // @Get(':id')
+  // @UseGuards(JwtAuthenticationGuard)
+  // // @Roles(Role.Admin)
+  // async getByUserId(@Param() { id }: ParamsWithId) {
+  //   return await this.paymentService.findByUserId(id);
+  // }
 
   // make Address object or query from user.id using userService
   @Post('/checkout')
