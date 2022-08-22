@@ -20,10 +20,10 @@ export class PaymentsService {
     return payments;
   }
 
-  async findOne(id: string) {
-    const payment = await this.paymentModel.findById(id);
-    return payment;
-  }
+  // async findByUserId(id: string) {
+  //   const payment = await this.paymentModel.find({ cart.userId: id}).exec();
+  //   return payment;
+  // }
 
   async getOrderByFillter() {
     //To-Do
@@ -41,6 +41,9 @@ export class PaymentsService {
         address: deliverAddress,
       });
     }
+
+    //reset user Cart after checkout
+    this.cartService.deleteCart(id);
     return newPayment.save();
   }
 
