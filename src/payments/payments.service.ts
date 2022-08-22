@@ -4,7 +4,8 @@ import { Connection, Model } from 'mongoose';
 import { CartService } from 'src/cart/cart.service';
 import { PaymentDTO } from './dto/payment.dto';
 import { Payment } from './payments.schema';
-import { toArray } from 'rxjs';
+import { Address } from 'src/users/address.schema';
+import AddressDTO from 'src/users/dto/address.dto';
 
 @Injectable()
 export class PaymentsService {
@@ -28,17 +29,19 @@ export class PaymentsService {
     //To-Do
   }
 
-  async create(id: string) {
+  async create(id: string, deliverAddress: AddressDTO) {
+    let newPayment;
     const currentCart = await this.cartService.getCart(id);
     console.log('cart to be bought ====>>>', currentCart);
-    const cartToBeBought = currentCart.toJSON();
-    delete cartToBeBought._id;
-
     if (currentCart?.items.length == 0) {
-      throw new BadRequestException('no items to checkout ');
+      throw new BadRequestException('no items to checkout currentCart.userId');
     } else {
-      return new this.paymentModel({ cart: currentCart }).save();
+      newPayment = new this.paymentModel({
+        cart: currentCart,
+        address: deliverAddress,
+      });
     }
+    return newPayment.save();
   }
 
   async update(id: string, payment: PaymentDTO) {

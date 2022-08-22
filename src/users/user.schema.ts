@@ -31,7 +31,7 @@ export class User {
   @Exclude()
   password: string;
 
-  @Prop({ type: AddressSchema })
+  @Prop({ type: AddressSchema, required: true })
   @Type(() => Address)
   address: Address;
 
