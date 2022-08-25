@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -13,37 +11,38 @@ import {
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
 import { FoodsService } from './foods.service';
-
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 @Controller('foods')
 export class FoodsController {
   constructor(private readonly foodsService: FoodsService) {}
 
   //Get All food
   @Get()
-  findAll(@Query() paginationQuery) {
-    // const { limit, offset } = paginationQuery;
-    return this.foodsService.findAll();
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { limit, offset } = paginationQuery;
+    return this.foodsService.findAll(paginationQuery);
   }
 
   //Get specefic food
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    console.log(typeof id);
-
+  findOne(@Param('id') id: string) {
     return this.foodsService.findOne('' + id);
+  }
+
+  @Get('/findwithout/:id')
+  findWithoutId(@Param('id') id: string): Promise<any> {
+    return this.foodsService.findWithout(id);
   }
 
   //Create A food
   @Post()
   create(@Body() createFoodDto: CreateFoodDto) {
-    console.log(createFoodDto instanceof CreateFoodDto);
-
     return this.foodsService.create(createFoodDto);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFoodDto: UpdateFoodDto) {
-    // return `This action updates #${id} and #${name}`;
     return this.foodsService.update(id, updateFoodDto);
   }
 
