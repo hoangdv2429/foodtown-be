@@ -54,16 +54,18 @@ class UsersService {
     return user;
   }
 
-  async create(userData: CreateUserDto) {
+  async create(userData: CreateUserDto): Promise<UserDocument> {
+
     const createdUser = new this.userModel(userData);
-    await createdUser.populate({
+    console.log("this is user new _id", createdUser._id);
+    
+    return await createdUser.populate({
       path: 'posts',
       populate: {
         path: 'categories',
       },
     });
-    console.log(userData);
-    return createdUser.save();
+    return await createdUser.save();
   }
 
   async delete(userId: string) {

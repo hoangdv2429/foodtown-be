@@ -13,7 +13,7 @@ export type UserDocument = User & Document;
   },
 })
 export class User {
-  @Transform(({ value }) => value.toString())
+  @Transform(( value ) => value.toString())
   _id: ObjectId;
 
   @Prop({ unique: true })

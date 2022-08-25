@@ -6,6 +6,7 @@ import {
   Post,
   UseGuards,
   Get,
+  UseInterceptors
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import RegisterDto from './dto/register.dto';
@@ -18,8 +19,11 @@ import { Roles } from './decorators/role.decorator';
 import { Role } from './enums/role.enum';
 import { RolesGuard } from './guards/roles.guard';
 
+import { User } from 'src/users/user.schema';
+import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
+
 @Controller('authentication')
-// @UseInterceptors(MongooseClassSerializerInterceptor(User)) temperaly disable this one
+// @UseInterceptors(MongooseClassSerializerInterceptor(User)) //temperaly disable this one
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 

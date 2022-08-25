@@ -23,7 +23,9 @@ export class AuthenticationService {
         password: hashedPassword,
       });
     } catch (error: any) {
-      if (error?.code === MongoError.DuplicateKey) {
+      if (error?.code == MongoError.DuplicateKey) {
+        // console.log(`${typeof error?.code} `+ `${error?.code} `+ `${typeof MongoError.DuplicateKey} ${ MongoError.DuplicateKey}`);
+        // console.log(error?.code == MongoError.DuplicateKey);
         throw new HttpException(
           'User with that email already exists',
           HttpStatus.BAD_REQUEST,
