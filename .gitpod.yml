@@ -4,6 +4,7 @@
 
 tasks:
   - init: yarn install && yarn run build
-    command: yarn run start
+    command: docker-compose up -d && yarn run start
+
 
 
