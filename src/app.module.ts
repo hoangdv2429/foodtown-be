@@ -20,30 +20,30 @@ import { PaymentsModule } from './payments/payments.module';
         MONGO_HOST: Joi.string().required(),
       }),
     }),
-    // MongooseModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: async (configService: ConfigService) => {
-    //     const username = configService.get('MONGO_USERNAME');
-    //     const password = configService.get('MONGO_PASSWORD');
-    //     const database = configService.get('MONGO_DATABASE');
-    //     const host = configService.get('MONGO_HOST');
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const username = configService.get('MONGO_USERNAME');
+        const password = configService.get('MONGO_PASSWORD');
+        const database = configService.get('MONGO_DATABASE');
+        const host = configService.get('MONGO_HOST');
 
-    //     return {
-    //       uri: `mongodb://${username}:${password}@${host}`,
-    //       dbName: database,
-    //     };
-    //   },
-    //   inject: [ConfigService],
-    // }),
-    MongooseModule.forRoot(
-      'mongodb+srv://cluster0.lbujmws.mongodb.net',
-      {
-        user: 'Root',
-        pass: 'foodtown',
-        // dbName: 'Cluster0',
-        w: 'majority',
-        retryWrites: true
-      }),
+        return {
+          uri: `mongodb://${username}:${password}@${host}`,
+          dbName: database,
+        };
+      },
+      inject: [ConfigService],
+    }),
+    // MongooseModule.forRoot(
+    //   'mongodb+srv://cluster0.lbujmws.mongodb.net',
+    //   {
+    //     user: 'Root',
+    //     pass: 'foodtown',
+    //     // dbName: 'Cluster0',
+    //     w: 'majority',
+    //     retryWrites: true
+    //   }),
     PostsModule,
     AuthenticationModule,
     CategoriesModule,
