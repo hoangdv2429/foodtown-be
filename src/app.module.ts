@@ -29,7 +29,7 @@ import { PaymentsModule } from './payments/payments.module';
         const host = configService.get('MONGO_HOST');
 
         return {
-          uri: `mongodb://${username}:${password}@${host}`,
+          uri: `mongodb+srv://${username}:${password}@${host}`,
           dbName: database,
         };
       },
